@@ -1,23 +1,12 @@
 package com.dictionary.service;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.dictionary.repository.DictionaryRepositoryImpl;
+import com.dictionary.repository.IDictionaryRepository;
 
 public class DictionaryServiceImpl implements IDictionaryService{
-    public static Map<String, String> stringMap = new HashMap<>();
-    static {
-        stringMap.put("Hello", "Xin chao");
-        stringMap.put("School", "Truong hoc");
-        stringMap.put("Student", "Sinh vien");
-        stringMap.put("Codegym", "Qua la pro luon");
-        stringMap.put("Play", "Choi");
-    }
+    private IDictionaryRepository dictionaryRepository = new DictionaryRepositoryImpl();
 
     public String dictionaryLookup(String englishWord){
-        if (stringMap.containsKey(englishWord)){
-            return stringMap.get(englishWord);
-        } else {
-            return "Khong tim thay";
-        }
+       return dictionaryRepository.dictionaryLookup(englishWord);
     }
 }
