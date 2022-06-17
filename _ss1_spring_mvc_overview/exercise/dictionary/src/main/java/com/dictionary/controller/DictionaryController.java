@@ -1,6 +1,6 @@
 package com.dictionary.controller;
 
-import com.dictionary.service.DictionaryServiceImpl;
+import com.dictionary.service.DictionaryService;
 import com.dictionary.service.IDictionaryService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,7 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class DictionaryController {
-    private IDictionaryService dictionary = new DictionaryServiceImpl();
+    private IDictionaryService dictionary = new DictionaryService();
 
     @GetMapping("/")
     public String showHomePage() {

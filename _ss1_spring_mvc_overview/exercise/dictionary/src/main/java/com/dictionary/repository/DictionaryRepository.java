@@ -3,7 +3,7 @@ package com.dictionary.repository;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DictionaryRepositoryImpl implements IDictionaryRepository{
+public class DictionaryRepository implements IDictionaryRepository{
     public static Map<String, String> stringMap = new HashMap<>();
     static {
         stringMap.put("Hello", "Xin chao");
