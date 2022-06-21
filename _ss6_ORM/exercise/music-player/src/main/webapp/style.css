@@ -1,0 +1,44 @@
+.header-logo{
+    width: 4rem;
+    margin: 0 0.3rem;
+}
+
+.bg-frm-darkblue{
+    background-color: #046056;
+}
+
+.body-justify-center {
+    justify-content: center;
+}
+
+.border-radius {
+    border-radius: 1rem;
+}
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 50px;
+}
+
+html {
+    font-family: Tahoma Serif serif;
+}
+
+.page-item.active .page-link {
+    background-color: #046056 !important;
+    z-index: 1;
+    color: #fff;
+    border-color: #046056;
+}
+
+.nav-bar-sticky {
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+    left: 0;
+    z-index: 99;
+}
+.a {
+    color: red;
+}
