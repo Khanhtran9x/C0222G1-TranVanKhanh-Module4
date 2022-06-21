@@ -1,0 +1,103 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Blog</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <div class="row" style="justify-content: center">
+        <p class="font-weight-normal" style="font-size: 1.5rem; margin-bottom: 1rem">
+            Blog</p>
+    </div>
+    <div class="row m-2" style="justify-content: center">
+        <a th:href="@{/create}">Add new blog</a>
+    </div>
+    <div class="row">
+        <div class="col-lg-4 col-md-4">
+        </div>
+        <div class="col-lg-8 col-md-8">
+            <form th:action="@{/search}" method="GET" novalidate="novalidate" class="form-inline">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="title" placeholder="Search name">
+                </div>
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+        </div>
+    </div>
+    <div class="row" style="justify-content: center">
+        <div class="bg-light p-3 border-radius">
+            <table class="table table-responsive table-hover" id="bookTable" width="100%" style="width: 100%;">
+                <thead>
+                <tr style="background-color: #046056">
+                    <th scope="col" class="text-white">#</th>
+                    <th scope="col" class="text-white">Title</th>
+                    <th scope="col" class="text-white">CreatingDate</th>
+                    <th scope="col" class="text-white">Content</th>
+                    <th scope="col" class="text-white">Edit</th>
+                    <th scope="col" class="text-white">Delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="row,rowStat : ${blogList}">
+                    <td th:text="${rowStat.count}"></td>
+                    <td th:text="${row.getTitle()}"></td>
+                    <td th:text="${row.getCreatingDate()}"></td>
+                    <td><a th:href="@{/{id}/read(id=${row.getId()})}">Read</a></td>
+                    <td><a th:href="@{/{id}/edit(id=${row.getId()})}">Edit</a></td>
+                    <td>
+                        <a href="#" th:onclick="'blogIndex(\'' + ${row.id}+  '\', \'' + ${row.title}+  '\');'" data-toggle="modal"
+                           data-target="#delete">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="delete">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title w-100 text-center" id="notification"></h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-dark" onclick="blogIndex2()">
+                    <a class="text-white">Delete</a>
+                </button>
+                <button type="button" class="btn btn-dark " data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var id;
+
+    function blogIndex(index, name) {
+        id = index;
+        document.getElementById("notification").innerHTML = "Are you sure you to delete " + name;
+    };
+
+    function blogIndex2() {
+        let link = id + "/delete/";
+        window.location.href = link;
+    };
+</script>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+</html>
