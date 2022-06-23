@@ -61,7 +61,7 @@ public class CategoryController {
     @GetMapping("/{id}/blog")
     public String showBlogList(@PathVariable Integer id, Model model){
         Optional<Category> category = categoryService.findById(id);
-        model.addAttribute("blogList", blogService.findAllByCategoryContaining(category.get()));
+        model.addAttribute("category", category.get());
         return "category/view";
     }
 }

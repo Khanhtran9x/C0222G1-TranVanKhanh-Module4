@@ -8,7 +8,7 @@
 <body>
 <div class="container">
    <div class="row" style="justify-content: center">
-       <p th:each = "row: ${blogList}" th:text="${blogList.title}"></p>
+       <p th:each = "row: ${category.blogs}" th:text="${row.title}"></p>
    </div>
 </div>
 </body>

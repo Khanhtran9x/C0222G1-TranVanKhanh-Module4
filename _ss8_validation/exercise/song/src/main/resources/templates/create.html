@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Song</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <div class="row" style="justify-content: center">
+        <p style="font-size: 1.5rem">Add New Song</p>
+    </div>
+    <div class="row" style="justify-content: center">
+        <form th:object="${song}" th:action="@{/save}" method="POST" class="needs-validation p-4" style="background-color: whitesmoke; border-radius: 1rem" novalidate>
+                <div class="row mb-3">
+                    <label for="validationCustom01">Song name</label>
+                    <input type="text" th:field = "*{name}" class="form-control" id="validationCustom01" placeholder="Song name" value="" required>
+                    <p style="color: red" th:if="${#fields.hasErrors('name')}" th:errors = "*{name}"></p>
+                </div>
+                <div class="row mb-3">
+                    <label for="validationCustom02">Song artist</label>
+                    <input type="text" th:field = "*{artist}" class="form-control" id="validationCustom02" placeholder="Song artist" value="" required>
+                    <p style="color: red" th:if="${#fields.hasErrors('artist')}" th:errors = "*{artist}"></p>
+                </div>
+                <div class="row mb-3">
+                    <label for="validationCustomPhone">Type</label>
+                    <input type="text" th:field = "*{type}" class="form-control" id="validationCustomPhone" placeholder="Music type" value="" required>
+                    <p style="color: red" th:if="${#fields.hasErrors('type')}" th:errors = "*{type}"></p>
+                </div>
+
+            <div class="form-group">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+                    <label class="form-check-label" for="invalidCheck">
+                        Agree to terms and conditions
+                    </label>
+                    <div class="invalid-feedback">
+                        You must agree before submitting.
+                    </div>
+                </div>
+            </div>
+            <button class="btn text-white" type="submit" style="background-color: #046056">Submit form</button>
+        </form>
+
+        <script>
+            // Example starter JavaScript for disabling form submissions if there are invalid fields
+            (function() {
+                'use strict';
+                window.addEventListener('load', function() {
+                    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                    var forms = document.getElementsByClassName('needs-validation');
+                    // Loop over them and prevent submission
+                    var validation = Array.prototype.filter.call(forms, function(form) {
+                        form.addEventListener('submit', function(event) {
+                            if (form.checkValidity() === false) {
+                                event.preventDefault();
+                                event.stopPropagation();
+                            }
+                            form.classList.add('was-validated');
+                        }, false);
+                    });
+                }, false);
+            })();
+        </script>
+    </div>
+</div>
+</body>
+</html>
