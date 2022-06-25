@@ -68,15 +68,24 @@
 </div>
 
 <div class="row" style="justify-content: center">
-    <span class="m-1">
-        <a th:if = "${blogList.hasPrevious()}" th:href="@{/blog/(page = ${blogList.number - 1})}">Previous</a>
-    </span>
-    <span th:each="pageNo: ${#numbers.sequence(0,blogList.totalPages - 1)}" class="m-1">
-        <a th:href="@{/blog/(page = ${pageNo})}" th:text="${pageNo + 1}"></a>
-    </span>
-    <span class="m-1">
-        <a th:if = "${blogList.hasNext()}" th:href="@{/blog/(page = ${blogList.number + 1})}">Next</a>
-    </span>
+    <nav>
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link" th:if = "${blogList.hasPrevious()}" th:href="@{/blog/(page = ${blogList.number - 1})}">Previous</a>
+            </li>
+            <div th:each="pageNo: ${#numbers.sequence(0,blogList.totalPages - 1)}">
+                <li class="page-item" th:if="${blogList.number != pageNo}">
+                    <a class="page-link" th:href="@{/blog/(page = ${pageNo})}" th:text="${pageNo + 1}"></a>
+                </li>
+                <li class="page-item active" th:if="${blogList.number == pageNo}">
+                    <a class="page-link" th:href="@{/blog/(page = ${pageNo})}" th:text="${pageNo + 1}"> </a>
+                </li>
+            </div>
+            <li class="page-item">
+                <a class="page-link" th:if = "${blogList.hasNext()}" th:href="@{/blog/(page = ${blogList.number + 1})}">Next</a>
+            </li>
+        </ul>
+    </nav>
 </div>
 
 <div class="modal" id="delete">

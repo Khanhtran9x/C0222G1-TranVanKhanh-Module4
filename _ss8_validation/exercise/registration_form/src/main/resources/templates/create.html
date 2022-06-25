@@ -18,30 +18,34 @@
             <div class="form-row">
                 <div class="col-md-4 mb-3">
                     <label for="validationCustom01">First name</label>
-                    <input type="text" th:field = "*{firstName}" class="form-control" id="validationCustom01" placeholder="First name" value="" required>
-                    <p style="color: red" th:if="${#fields.hasErrors('firstName')}" th:errors = "*{firstName}"></p>
+                    <input type="text" th:field = "*{firstName}" class="form-control" id="validationCustom01" placeholder="First name" value="" required
+                    pattern="^[A-Za-z]{2,45}$" title="Wrong first name format">
+                    <p style="color: red; font-size: 0.9rem" th:if="${#fields.hasErrors('firstName')}" th:errors = "*{firstName}"></p>
                 </div>
                 <div class="col-md-4 mb-3">
                     <label for="validationCustom02">Last name</label>
-                    <input type="text" th:field = "*{lastName}" class="form-control" id="validationCustom02" placeholder="Last name" value="" required>
-                    <p style="color: red" th:if="${#fields.hasErrors('lastName')}" th:errors = "*{lastName}"></p>
+                    <input type="text" th:field = "*{lastName}" class="form-control" id="validationCustom02" placeholder="Last name" value="" required
+                           pattern="^[A-Za-z\s]{2,45}$" title="Wrong last name format">
+                    <p style="color: red; font-size: 0.9rem" th:if="${#fields.hasErrors('lastName')}" th:errors = "*{lastName}"></p>
                 </div>
                 <div class="col-md-4 mb-3">
                     <label for="validationCustomPhone">Phone Number</label>
-                    <input type="text" th:field = "*{phoneNumber}" class="form-control" id="validationCustomPhone" placeholder="Phone Number" value="" required>
-                    <p style="color: red" th:if="${#fields.hasErrors('phoneNumber')}" th:errors = "*{phoneNumber}"></p>
+                    <input type="text" th:field = "*{phoneNumber}" class="form-control" id="validationCustomPhone" placeholder="Phone Number" value="" required
+                           pattern="(090)[\d]{7}|(091)[\d]{7}" title="Wrong phone number format">
+                    <p style="color: red; font-size: 0.9rem" th:if="${#fields.hasErrors('phoneNumber')}" th:errors = "*{phoneNumber}"></p>
                 </div>
             </div>
             <div class="form-row">
                 <div class="col-md-6 mb-3">
                     <label for="validationCustom03">Date Of Birth</label>
                     <input type="date" th:field = "*{dateOfBirth}" class="form-control" id="validationCustom03" placeholder="" required>
-                    <p style="color: red" th:if="${#fields.hasErrors('dateOfBirth')}" th:errors = "*{dateOfBirth}"></p>
+                    <p style="color: red; font-size: 0.9rem" th:if="${#fields.hasErrors('dateOfBirth')}" th:errors = "*{dateOfBirth}"></p>
                 </div>
                 <div class="col-md-3 mb-3">
                     <label for="validationCustom04">Email</label>
-                    <input type="text" th:field = "*{email}" class="form-control" id="validationCustom04" placeholder="abc@abc.xyz" required>
-                    <p style="color: red" th:if="${#fields.hasErrors('email')}" th:errors = "*{email}"></p>
+                    <input type="text" th:field = "*{email}" class="form-control" id="validationCustom04" placeholder="abc@abc.xyz" required
+                           pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}" title="Wrong email format">
+                    <p style="color: red; font-size: 0.9rem" th:if="${#fields.hasErrors('email')}" th:errors = "*{email}"></p>
                 </div>
             </div>
             <div class="form-group">
