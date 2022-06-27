@@ -41,6 +41,6 @@ public class UserService implements IUserService{
 
     @Override
     public User findByCode(String code) {
-        return userRepository.findByCodeContaining(code);
+        return userRepository.findByCode(code);
     }
 }

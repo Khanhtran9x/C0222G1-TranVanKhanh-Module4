@@ -13,7 +13,7 @@ public class BookAspect {
             "|| execution(* com.library.controller.UserController.returnBook(..))")
     public void logAfterMethodController(JoinPoint joinPoint){
         String method = joinPoint.getSignature().getName();
-        System.err.println("The method just called is:" + method);
+        System.err.println("The method just called is: " + method);
     }
 
     private int countVisitor = 0;
@@ -24,6 +24,6 @@ public class BookAspect {
     @After("allControllerPointCut()")
     public void countVisitor() {
         System.out.println("------------------");
-        System.err.println("The number of visitor = " +  countVisitor++);
+        System.err.println("The number of visitor is " +  ++countVisitor);
     }
 }
