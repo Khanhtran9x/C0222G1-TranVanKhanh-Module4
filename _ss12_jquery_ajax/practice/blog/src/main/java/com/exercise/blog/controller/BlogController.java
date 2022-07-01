@@ -24,7 +24,7 @@ public class BlogController {
     public String showIndex(@RequestParam(name = "page", defaultValue = "0") int page, Model model) {
         Sort sort = Sort.by("creating_date").descending();
         model.addAttribute("categoryList", categoryService.findAll());
-        model.addAttribute("blogList", blogService.findAll(PageRequest.of(page, 5, sort)));
+        model.addAttribute("blogList", blogService.findAll(PageRequest.of(page, 2, sort)));
         return "blog/index";
     }
 
@@ -67,9 +67,9 @@ public class BlogController {
     }
 
     @GetMapping("/search")
-    public String searchByName(@RequestParam(name = "page", defaultValue = "0") int page, String title, String categoryId, Model model){
+    public String searchByName(@RequestParam(name = "page", defaultValue = "0") int page, String title, Model model){
         Sort sort = Sort.by("creating_date").descending();
-        model.addAttribute("blogList", blogService.searchByName(title, categoryId, PageRequest.of(page, 2, sort)));
+        model.addAttribute("blogList", blogService.findByName(title, PageRequest.of(page, 2, sort)));
         model.addAttribute("categoryList", categoryService.findAll());
         return "blog/index";
     }

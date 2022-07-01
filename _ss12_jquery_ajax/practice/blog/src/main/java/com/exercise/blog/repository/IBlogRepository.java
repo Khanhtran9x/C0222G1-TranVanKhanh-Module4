@@ -38,8 +38,10 @@ public interface IBlogRepository extends JpaRepository<Blog, Integer> {
     @Query(value = "DELETE FROM blog WHERE id = :id", nativeQuery = true)
     void remove(@Param("id") int id);
 
-    @Query(value = "SELECT *  FROM blog WHERE title LIKE :title AND category_id LIKE :categoryId", nativeQuery = true)
-    Page<Blog> searchByName(@Param("title") String title, @Param("categoryId") String categoryId, Pageable pageble);
+    @Query(value = "SELECT *  FROM blog WHERE title LIKE :title", nativeQuery = true)
+    Page<Blog> searchByName(@Param("title") String title, Pageable pageble);
 
     List<Blog> findAllByCategoryContaining(Category category);
+
+    Page<Blog> findByTitleContaining(String title, Pageable pageble);
 }

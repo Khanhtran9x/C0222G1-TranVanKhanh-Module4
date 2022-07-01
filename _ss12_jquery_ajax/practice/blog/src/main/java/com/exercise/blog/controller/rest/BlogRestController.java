@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -19,7 +20,17 @@ public class BlogRestController {
     @GetMapping
     public ResponseEntity<?> showAll(@RequestParam(name = "page", defaultValue = "0") int page) {
         Sort sort = Sort.by("creating_date").descending();
-        Page<Blog> blogs = blogService.findAll(PageRequest.of(page, 5, sort));
+        Page<Blog> blogs = blogService.findAll(PageRequest.of(page, 2, sort));
+        if (blogs.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(blogs, HttpStatus.OK);
+    }
+
+    @GetMapping("/load")
+    public ResponseEntity<?> loadMore(@RequestParam(name = "page", defaultValue = "0") int page) {
+        Sort sort = Sort.by("creating_date").descending();
+        Page<Blog> blogs = blogService.findAll(PageRequest.of(page, 10, sort));
         if (blogs.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -35,10 +46,10 @@ public class BlogRestController {
         return new ResponseEntity<>(blog, HttpStatus.OK);
     }
 
-    @GetMapping("/{name}/{categoryId}")
-    public ResponseEntity<?> searchByName(@PathVariable String name, @PathVariable String categoryId, @RequestParam(name = "page", defaultValue = "0") int page){
+    @GetMapping("/search/{name}")
+    public ResponseEntity<?> searchByName(@PathVariable String name, @RequestParam(name = "page", defaultValue = "0") int page){
         Sort sort = Sort.by("creating_date").descending();
-        Page<Blog> blogs = blogService.searchByName(name, categoryId, PageRequest.of(page, 5, sort));
+        Page<Blog> blogs = blogService.findByName(name, PageRequest.of(page, 5, sort));
         if (blogs.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
