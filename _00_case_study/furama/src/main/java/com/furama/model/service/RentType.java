@@ -1,5 +1,7 @@
 package com.furama.model.service;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -12,6 +14,7 @@ public class RentType {
     private Double rentTypeCost;
 
     @OneToMany(mappedBy = "rentType")
+    @JsonIgnore
     private Set<Service> services;
 
     public Integer getRentTypeId() {
