@@ -1,0 +1,165 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Blog</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="row" style="justify-content: center">
+        <p class="font-weight-normal" style="font-size: 1.5rem; margin-bottom: 1rem">
+            Blog</p>
+    </div>
+    <div class="row" style="justify-content: center">
+        <a th:if="${#request.userPrincipal != null}" th:href="@{/logout}">Logout</a>
+    </div>
+    <div class="row m-2" style="justify-content: center">
+        <a th:href="@{/category}">Display category list</a>
+    </div>
+    <div class="row m-2" style="justify-content: center">
+        <a th:href="@{/blog/create}">Add new blog</a>
+    </div>
+    <div class="row">
+        <div class="col-lg-4 col-md-4">
+        </div>
+        <div class="col-lg-8 col-md-8">
+            <form method="GET" novalidate="novalidate" class="form-inline">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="name" name="title" placeholder="Search name">
+                </div>
+                <button type="button" onclick="search()" class="btn btn-primary">Search</button>
+            </form>
+        </div>
+    </div>
+    <div class="row" style="justify-content: center">
+        <div class="bg-light p-3 border-radius">
+            <table class="table table-responsive table-hover" id="blogTable" width="100%" style="width: 100%;">
+                <thead>
+                <tr style="background-color: #046056">
+                    <th scope="col" class="text-white">#</th>
+                    <th scope="col" class="text-white">Title</th>
+                    <th scope="col" class="text-white">Creating Date</th>
+                    <th scope="col" class="text-white">Category</th>
+                    <th scope="col" class="text-white">Content</th>
+                    <th scope="col" class="text-white">Edit</th>
+                    <th scope="col" class="text-white">Delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="row,rowStat : ${blogList}">
+                    <td th:text="${rowStat.count}"></td>
+                    <td th:text="${row.getTitle()}"></td>
+                    <td th:text="${row.getCreatingDate()}"></td>
+                    <td th:text="${row.getCategory.getName()}"></td>
+                    <td><a th:href="@{/blog/{id}/read(id=${row.getId()})}">Read</a></td>
+                    <td><a th:href="@{/blog/{id}/edit(id=${row.getId()})}">Edit</a></td>
+                    <td>
+                        <a th:href="@{/blog/{id}/delete(id=${row.getId()})}">Delete</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row" style="justify-content: center">
+        <button class="btn btn-primary" onclick="load()">Load more</button>
+    </div>
+</div>
+
+<script>
+    function search(){
+        let name = $('#name').val();
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            type: "GET",
+            url: `/api/blog/search/${name}`,
+            success: function (data) {
+                debugger;
+                data = data.content;
+                let content = " <thead>\n" +
+                    "                <tr style=\"background-color: #046056\">\n" +
+                    "                    <th scope=\"col\" class=\"text-white\">#</th>\n" +
+                    "                    <th scope=\"col\" class=\"text-white\">Title</th>\n" +
+                    "                    <th scope=\"col\" class=\"text-white\">Creating Date</th>\n" +
+                    "                    <th scope=\"col\" class=\"text-white\">Category</th>\n" +
+                    "                    <th scope=\"col\" class=\"text-white\">Content</th>\n" +
+                    "                    <th scope=\"col\" class=\"text-white\">Edit</th>\n" +
+                    "                    <th scope=\"col\" class=\"text-white\">Delete</th>\n" +
+                    "                </tr>\n" +
+                    "                </thead>\n" +
+                    "                <tbody>";
+                for (let i = 0; i < data.length; i++) {
+                    content += getBlog(data[i]);
+                }
+                content += "</tbody>";
+                document.getElementById('blogTable').innerHTML = content;
+            }
+        })
+    }
+    function getBlog(blog) {
+        return `<tr><td >${blog.id}</td><td >${blog.title}</td><td >${blog.creatingDate}</td><td >${blog.category.name}</td>` +
+            '<td><a class="readBlog" onclick="readBlog()" href="${blog.id}">Read</a></td>' +
+            '<td><a class="editBlog" onclick="editBlog()" href="${blog.id}">Edit</a></td>' +
+            `<td><a class="deleteBlog" onclick="deleteBlog()" href="${blog.id}">Delete</a></td></tr>`;
+    }
+
+    function load() {
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            type: "GET",
+            url: `/api/blog/load`,
+            success: function (data) {
+                debugger;
+                data = data.content;
+                let content = " <thead>\n" +
+                    "                <tr style=\"background-color: #046056\">\n" +
+                    "                    <th scope=\"col\" class=\"text-white\">#</th>\n" +
+                    "                    <th scope=\"col\" class=\"text-white\">Title</th>\n" +
+                    "                    <th scope=\"col\" class=\"text-white\">Creating Date</th>\n" +
+                    "                    <th scope=\"col\" class=\"text-white\">Category</th>\n" +
+                    "                    <th scope=\"col\" class=\"text-white\">Content</th>\n" +
+                    "                    <th scope=\"col\" class=\"text-white\">Edit</th>\n" +
+                    "                    <th scope=\"col\" class=\"text-white\">Delete</th>\n" +
+                    "                </tr>\n" +
+                    "                </thead>\n" +
+                    "                <tbody>";
+                for (let i = 0; i < data.length; i++) {
+                    content += getBlog(data[i]);
+                }
+                content += "</tbody>";
+                document.getElementById('blogTable').innerHTML = content;
+            }})
+    }
+
+    function readBlog(){
+        let a = $(this);
+        let id = a.attr("href");
+        let url = "/blog/" + id + "/read";
+        window.location.href = url;
+    }
+
+    function editBlog(){
+        let a = $(this);
+        let id = a.attr("href");
+        let url = "/blog/" + id + "/edit";
+        window.location.href = url;
+    }
+
+    function deleteBlog(){
+        let a = $(this);
+        let id = a.attr("href");
+        let url = "/blog/" + id + "/delete";
+        window.location.href = url;
+    }
+
+</script>
+</body>
+</html>

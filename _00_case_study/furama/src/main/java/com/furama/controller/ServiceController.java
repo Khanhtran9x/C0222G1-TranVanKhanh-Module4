@@ -28,7 +28,7 @@ public class ServiceController {
     @GetMapping("")
     public String showList(@RequestParam(name = "page", defaultValue = "0") int page, Model model) {
         Sort sort = Sort.by("serviceCode").ascending();
-        model.addAttribute("serviceList", serviceService.findAll(PageRequest.of(page, 7, sort)));
+        model.addAttribute("serviceList", serviceService.findAll(PageRequest.of(page, 5, sort)));
         model.addAttribute("service", new Service());
         model.addAttribute("serviceTypeList", serviceTypeService.findAll());
         model.addAttribute("rentTypeList", rentTypeService.findAll());

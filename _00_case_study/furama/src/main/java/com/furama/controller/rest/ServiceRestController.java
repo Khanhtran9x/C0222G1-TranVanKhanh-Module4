@@ -19,15 +19,11 @@ import java.util.Optional;
 public class ServiceRestController {
     @Autowired
     private IServiceService serviceService;
-    @Autowired
-    private IServiceTypeService serviceTypeService;
-    @Autowired
-    private IRentTypeService rentTypeService;
 
     @GetMapping
     public ResponseEntity<?> allServices(@RequestParam(name = "page", defaultValue = "0") int page) {
         Sort sort = Sort.by("serviceCode").ascending();
-        Page<Service> serviceList = serviceService.findAll(PageRequest.of(page, 7, sort));
+        Page<Service> serviceList = serviceService.findAll(PageRequest.of(page, 5, sort));
         if (serviceList.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
