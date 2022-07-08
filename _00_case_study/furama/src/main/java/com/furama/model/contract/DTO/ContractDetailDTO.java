@@ -1,27 +1,23 @@
-package com.furama.model.contract;
+package com.furama.model.contract.DTO;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
+import com.furama.model.contract.AttachService;
+import com.furama.model.contract.Contract;
 
-import javax.persistence.*;
-
-@Entity(name = "contract_detail")
-public class ContractDetail {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class ContractDetailDTO {
     private Integer contractDetailId;
-    @Column(columnDefinition = "INT")
     private String quantity;
-
-    @ManyToOne
-    @JoinColumn(name="contract_id", nullable=false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private Contract contract;
-
-    @ManyToOne
-    @JoinColumn(name="attach_service_id", nullable=false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private AttachService attachService;
+
+    public ContractDetailDTO() {
+    }
+
+    public ContractDetailDTO(Integer contractDetailId, String quantity, Contract contract, AttachService attachService) {
+        this.contractDetailId = contractDetailId;
+        this.quantity = quantity;
+        this.contract = contract;
+        this.attachService = attachService;
+    }
 
     public Integer getContractDetailId() {
         return contractDetailId;

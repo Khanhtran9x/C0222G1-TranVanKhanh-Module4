@@ -1,45 +1,39 @@
-package com.furama.model.contract;
+package com.furama.model.contract.DTO;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.furama.model.contract.ContractDetail;
 import com.furama.model.customer.Customer;
 import com.furama.model.employee.Employee;
 import com.furama.model.service.Service;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
-import javax.persistence.*;
 import java.util.Set;
 
-@Entity(name = "contract")
-public class Contract {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class ContractDTO {
     private Integer contractId;
-    @Column(columnDefinition = "DATE")
     private String contractStartDate;
-    @Column(columnDefinition = "DATE")
     private String contractEndDate;
-    @Column(columnDefinition = "DOUBLE")
     private String contractDeposit;
-
-    @ManyToOne
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name="employee_id", nullable=false)
+    private Double contractTotalMoney;
     private Employee employee;
-
-    @ManyToOne
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name="customer_id", nullable=false)
     private Customer customer;
-
-    @ManyToOne
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name="service_id", nullable=false)
     private Service service;
-
-    @OneToMany(mappedBy = "contract")
-    @JsonBackReference("contract")
     private Set<ContractDetail> contractDetails;
+
+    public ContractDTO() {
+    }
+
+    public ContractDTO(Integer contractId, String contractStartDate, String contractEndDate, String contractDeposit,
+                       Double contractTotalMoney, Employee employee, Customer customer, Service service,
+                       Set<ContractDetail> contractDetails) {
+        this.contractId = contractId;
+        this.contractStartDate = contractStartDate;
+        this.contractEndDate = contractEndDate;
+        this.contractDeposit = contractDeposit;
+        this.contractTotalMoney = contractTotalMoney;
+        this.employee = employee;
+        this.customer = customer;
+        this.service = service;
+        this.contractDetails = contractDetails;
+    }
 
     public Integer getContractId() {
         return contractId;
@@ -71,6 +65,14 @@ public class Contract {
 
     public void setContractDeposit(String contractDeposit) {
         this.contractDeposit = contractDeposit;
+    }
+
+    public Double getContractTotalMoney() {
+        return contractTotalMoney;
+    }
+
+    public void setContractTotalMoney(Double contractTotalMoney) {
+        this.contractTotalMoney = contractTotalMoney;
     }
 
     public Employee getEmployee() {

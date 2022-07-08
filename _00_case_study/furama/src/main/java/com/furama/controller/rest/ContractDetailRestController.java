@@ -1,17 +1,14 @@
 package com.furama.controller.rest;
 
 import com.furama.model.contract.ContractDetail;
-import com.furama.model.service.Service;
 import com.furama.service.contract.IContractDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/contract-details")
@@ -32,5 +29,15 @@ public class ContractDetailRestController {
     public ResponseEntity<?> createContractDetail(@RequestBody ContractDetail contractDetail) {
         contractDetailService.save(contractDetail);
         return new ResponseEntity<>(contractDetail, HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/{contractId}")
+    public ResponseEntity<?> delete(@PathVariable Integer contractId){
+        Optional<ContractDetail> contractDetail = contractDetailService.findById(contractId);
+        if (!contractDetail.isPresent()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        contractDetailService.remove(contractDetail.get());
+        return new ResponseEntity<>(contractDetail.get(), HttpStatus.OK);
     }
 }

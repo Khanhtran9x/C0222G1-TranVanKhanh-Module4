@@ -35,6 +35,7 @@ function createService() {
         rentType: rentType,
         serviceType: serviceType
     }
+    debugger
     $.ajax({
         headers: {
             'Accept': 'application/json',
@@ -43,7 +44,56 @@ function createService() {
         type: "POST",
         data: JSON.stringify(newService),
         url: "/api/services",
-        success: successHandler
+        success: successHandler,
+        error: function (e) {
+            console.log(e)
+            debugger
+            if (e.responseJSON.serviceCode != undefined){
+                document.getElementById("serviceCodeError").innerText = e.responseJSON.serviceCode;
+            } else {
+                document.getElementById("serviceCodeError").innerText = "";
+            }
+            if (e.responseJSON.serviceName != undefined){
+                document.getElementById("serviceNameError").innerText = e.responseJSON.serviceName;
+            } else {
+                document.getElementById("serviceNameError").innerText = "";
+            }
+            if (e.responseJSON.serviceArea != undefined){
+                document.getElementById("serviceAreaError").innerText = e.responseJSON.serviceArea;
+            } else {
+                document.getElementById("serviceAreaError").innerText = "";
+            }
+            if (e.responseJSON.serviceCost != undefined){
+                document.getElementById("serviceCostError").innerText = e.responseJSON.serviceCost;
+            } else {
+                document.getElementById("serviceCostError").innerText = "";
+            }
+            if (e.responseJSON.serviceMaxPeople != undefined){
+                document.getElementById("serviceMaxPeopleError").innerText = e.responseJSON.serviceMaxPeople;
+            } else {
+                document.getElementById("serviceMaxPeopleError").innerText = "";
+            }
+            if (e.responseJSON.serviceStandardRoom != undefined){
+                document.getElementById("serviceStandardRoomError").innerText = e.responseJSON.serviceStandardRoom;
+            } else {
+                document.getElementById("serviceStandardRoomError").innerText = "";
+            }
+            if (e.responseJSON.descriptionOtherConvenience != undefined){
+                document.getElementById("serviceOtherConvenienceError").innerText = e.responseJSON.descriptionOtherConvenience;
+            } else {
+                document.getElementById("serviceOtherConvenienceError").innerText = "";
+            }
+            if (e.responseJSON.servicePoolArea != undefined){
+                document.getElementById("servicePoolAreaError").innerText = e.responseJSON.servicePoolArea;
+            } else {
+                document.getElementById("servicePoolAreaError").innerText = "";
+            }
+            if (e.responseJSON.serviceNumberOfFloors != undefined){
+                document.getElementById("serviceNumberOfFloorsError").innerText = e.responseJSON.serviceNumberOfFloors;
+            } else {
+                document.getElementById("serviceNumberOfFloorsError").innerText = "";
+            }
+        }
     })
 }
 
@@ -77,6 +127,7 @@ function successHandler() {
                 content += `<tr><td>${i + 1}</td>` + getService(data[i]);
             }
             content += '</tbody>';
+            $('#createModal').modal('hide');
             document.getElementById('serviceTable').innerHTML = content;
         }
     });

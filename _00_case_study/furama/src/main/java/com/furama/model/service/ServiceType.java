@@ -1,5 +1,6 @@
 package com.furama.model.service;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -13,7 +14,7 @@ public class ServiceType {
     private String serviceTypeName;
 
     @OneToMany(mappedBy = "serviceType")
-    @JsonIgnore
+    @JsonBackReference("service-type")
     private Set<Service> services;
 
     public Integer getServiceTypeId() {

@@ -1,5 +1,6 @@
 package com.furama.model.contract;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -18,7 +19,7 @@ public class AttachService {
     private String attachServiceStatus;
 
     @OneToMany(mappedBy = "attachService")
-    @JsonIgnore
+    @JsonBackReference("attach-service")
     private Set<ContractDetail> contractDetails;
 
     public Integer getAttachServiceId() {

@@ -1,5 +1,7 @@
 package com.furama.model.employee;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -11,6 +13,7 @@ public class Division {
     private String divisionName;
 
     @OneToMany(mappedBy = "division")
+    @JsonBackReference("division")
     private Set<Employee> employees;
 
     public Integer getDivisionId() {

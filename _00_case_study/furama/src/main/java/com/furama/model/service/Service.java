@@ -4,25 +4,35 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 
 @Entity(name = "service")
 public class Service {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer serviceId;
+    @Pattern(regexp = "^(DV-)\\d{4}$", message = "Invalid service code format")
     private String serviceCode;
+    @Pattern(regexp = "^[\\w\\s]+$", message = "Invalid service name")
     private String serviceName;
     @Column(columnDefinition = "INT")
+    @Pattern(regexp = "^[1-9]+\\d*$", message = "Invalid service area")
     private String serviceArea;
     @Column(columnDefinition = "DOUBLE")
+    @Pattern(regexp = "^\\d+(\\.\\d+)?$", message = "Invalid service cost")
     private String serviceCost;
     @Column(columnDefinition = "INT")
+    @Pattern(regexp = "^[1-9]+\\d*$", message = "Invalid service max people")
     private String serviceMaxPeople;
+    @Pattern(regexp = "^[\\w\\s]+$", message = "Invalid service standard room")
     private String serviceStandardRoom;
+    @Pattern(regexp = "^[\\w\\s]+$", message = "Invalid format")
     private String descriptionOtherConvenience;
     @Column(columnDefinition = "DOUBLE")
+    @Pattern(regexp = "^\\d+(\\.\\d+)?$", message = "Invalid service pool area")
     private String servicePoolArea;
     @Column(columnDefinition = "INT")
+    @Pattern(regexp = "^[1-9]+\\d*$", message = "Invalid service number of floors")
     private String serviceNumberOfFloors;
 
     @ManyToOne()

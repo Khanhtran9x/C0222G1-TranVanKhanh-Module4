@@ -1,5 +1,6 @@
 package com.furama.model.employee;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
@@ -15,7 +16,20 @@ public class User {
     private String password;
 
     @OneToMany(mappedBy = "user")
+    @JsonBackReference("user")
     private Set<Employee> employees;
+
+    @OneToMany(mappedBy = "user")
+    @JsonBackReference("user123")
+    private Set<UserRole> userRoles;
+
+    public Set<UserRole> getUserRoles() {
+        return userRoles;
+    }
+
+    public void setUserRoles(Set<UserRole> userRoles) {
+        this.userRoles = userRoles;
+    }
 
     public Integer getUserId() {
         return userId;

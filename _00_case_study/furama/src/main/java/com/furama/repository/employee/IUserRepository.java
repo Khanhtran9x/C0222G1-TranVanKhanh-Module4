@@ -7,4 +7,5 @@ import javax.transaction.Transactional;
 
 @Transactional
 public interface IUserRepository extends JpaRepository<User, Integer> {
+    User findByUserName(String userName);
 }

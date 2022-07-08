@@ -2,6 +2,7 @@ package com.furama.service.contract;
 
 import com.furama.model.contract.Contract;
 import com.furama.model.contract.ContractDetail;
+import com.furama.model.contract.DTO.ContractDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -20,4 +21,6 @@ public interface IContractService {
     void update(Contract contract);
 
     void remove(Contract contract);
+
+    Double calculateTotalMoney(Contract contract);
 }

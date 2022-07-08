@@ -1,17 +1,20 @@
 package com.furama.controller.rest;
 
 import com.furama.model.service.Service;
-import com.furama.service.service.IRentTypeService;
 import com.furama.service.service.IServiceService;
-import com.furama.service.service.IServiceTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -31,7 +34,7 @@ public class ServiceRestController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createService(@RequestBody Service service) {
+    public ResponseEntity<?> createService(@Valid @RequestBody Service service) {
         serviceService.save(service);
         return new ResponseEntity<>(service, HttpStatus.CREATED);
     }
@@ -55,5 +58,19 @@ public class ServiceRestController {
         service.setServiceId(serviceOptional.get().getServiceId());
         serviceService.save(service);
         return new ResponseEntity<>(service, HttpStatus.OK);
+    }
+
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public Map<String, String> handleValidationExceptions(
+            MethodArgumentNotValidException ex) {
+        Map<String, String> errors = new HashMap<>();
+        ex.getBindingResult().getAllErrors().forEach((error) -> {
+            String fieldName = ((FieldError) error).getField();
+            String errorMessage = error.getDefaultMessage();
+            errors.put(fieldName, errorMessage);
+        });
+        return errors;
     }
 }

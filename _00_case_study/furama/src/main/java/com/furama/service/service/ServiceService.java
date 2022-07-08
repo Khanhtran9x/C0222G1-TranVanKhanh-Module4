@@ -1,10 +1,12 @@
 package com.furama.service.service;
 
+import com.furama.model.service.Service;
 import com.furama.repository.service.IServiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Optional;
 
 @org.springframework.stereotype.Service
@@ -18,7 +20,12 @@ public class ServiceService implements IServiceService{
     }
 
     @Override
-    public void save(com.furama.model.service.Service service) {
+    public List<Service> findAll() {
+        return serviceRepository.findAll();
+    }
+
+    @Override
+    public void save(Service service) {
         serviceRepository.save(service);
     }
 
